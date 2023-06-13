@@ -29,9 +29,7 @@ const createWindow = () => {
 };
 
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+// This method will be called when Electron has finished initialization and is ready to create browser windows.
 app.on('ready', createWindow);
 
 /* === Setup Menu === */
@@ -112,40 +110,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-/* === === */
-
-
-let win_openaiKey;
-
-function dialog_openaiAPIKey() {
-  win_openaiKey = new BrowserWindow({
-    width:360,
-    height: 120, 
-    'parent': mainWindow,
-    'show': false,
-    'modal': true,
-    'alwaysOnTop' : true, 
-    'title' : "Open AI API Key",
-    'autoHideMenuBar': true,
-    'webPreferences' : { 
-      "nodeIntegration":true,
-      "sandbox" : false 
-    }   
-  });
-  win_openaiKey.on('closed', () => { 
-    win_openaiKey = null 
-    //callback(promptAnswer);
-  })
-
-  // Load the HTML dialog box
-  const html_openaiKeyDialog = url.format({
-    protocol: 'file',
-    pathname: path.join(__dirname, 'prompt.html'), 
-    slashes: true,
-  });
-
-  //win_openaiKey.loadURL(html_openaiKeyDialog)
-  win_openaiKey.loadFile(path.join(__dirname, 'prompt.html'))
-  win_openaiKey.once('ready-to-show', () => { win_openaiKey.show() })
-}
