@@ -43,8 +43,8 @@
       </div>
 
       <!-- Chat body -->
-      <div class="grow max-h-full px-4 py-4 overflow-y-auto">
-        <div class="flex flex-col justify-end">
+      <div class="grow px-4 py-4 overflow-y-auto">
+        <div id="chat-area" class="flex flex-col">
           <div class="border border-violet-100 bg-violet-50 shadow text-gray-900 rounded-xl px-3 max-w-[80%] w-fit mb-4">
             <p>
               Welcome to Business Bots!
@@ -66,30 +66,31 @@
               Hello Bot, nice to meet you!
             </p>
           </div>
-        </div>
 
-        <div class="border border-violet-100 bg-violet-50 shadow text-gray-900 rounded-xl px-3 max-w-[80%] w-fit">
-          <p>
-            Welcome to Business Bots!
-          </p>
-          <p>
-            It seems you haven't added your OpenAI API key yet. Follow the below steps to do that:
-          </p>
-          <ol>
-            <li>Go to <a href="https://openai.com">OpenAI.com</a></li>
-            <li>Click on the Settings button in the upper right corner and add your OpenAI API key.</li>
-          </ol>
-          <p>
-            Once you've added your OpenAI API key, you can click the Files button on the top bar to add files to your chat bot and start chatting.
-          </p>
+          <div class="border border-violet-100 bg-violet-50 shadow text-gray-900 rounded-xl px-3 max-w-[80%] w-fit">
+            <p>
+              Welcome to Business Bots!
+            </p>
+            <p>
+              It seems you haven't added your OpenAI API key yet. Follow the below steps to do that:
+            </p>
+            <ol>
+              <li>Go to <a href="https://openai.com">OpenAI.com</a></li>
+              <li>Click on the Settings button in the upper right corner and add your OpenAI API key.</li>
+            </ol>
+            <p>
+              Once you've added your OpenAI API key, you can click the Files button on the top bar to add files to your chat bot and start chatting.
+            </p>
+          </div>
+
         </div>
       </div>
 
       <!-- Chat Box input -->
       <div class="pt-2">
         <div class="relative px-3">
-          <textarea class="border border-gray-400 rounded w-full pl-1.5 pr-9 py-1.5 resize-none overflow-hidden" placeholder="Send message..." tabindex="0" rows="2" @click="sendMsg"></textarea>
-          <button class="absolute right-4 p-2 bottom-5 rounded text-gray-700">
+          <textarea id="user-msg-txtarea" class="border border-gray-400 rounded w-full pl-1.5 pr-9 py-1.5 resize-none overflow-hidden" placeholder="Send message..." tabindex="0" rows="2" @keydown.enter.prevent="sendMsg()"></textarea>
+          <button class="absolute right-4 p-2 bottom-5 rounded text-gray-700" @click="sendMsg()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
               <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
             </svg>
@@ -319,6 +320,5 @@
       </div>
     </div>
 
-    <script src="./src/renderer.js"></script>
   </body>
 </html>
