@@ -33,6 +33,12 @@ function sendMsg() {
   chatAreaElem.parentElement.scrollTop = chatAreaElem.parentElement.scrollHeight;
 }
 
+function selectUserFile() {
+  console.log("boo")
+  window.api.send("toMain", "cmd:user-select-file");
+}
+
 window.Alpine = Alpine
 window.sendMsg = sendMsg;
+window.selectUserFile = selectUserFile;
 

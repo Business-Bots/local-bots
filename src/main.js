@@ -1,4 +1,5 @@
-const { app, BrowserWindow, Menu, MenuItem, dialog } = require('electron');
+const { app, BrowserWindow, Menu, MenuItem, dialog, ipcMain } = require('electron');
+const fs = require('fs')
 const path = require('path');
 const url = require('url')
 
@@ -109,4 +110,53 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+});
+
+
+/* === App Logic begins here === */
+
+ipcMain.on("toMain", (event, args) => {
+  if(args.includes("cmd:user-select-file")) {
+    const selectFileOptions = {
+      filters: [
+        { name: 'Docs', extensions: ['pdf', 'txt', 'md'] }
+      ]
+    }
+    dialog.showOpenDialog(mainWindow, selectFileOptions)
+    .then(fileData => {
+      if(fileData.filePaths) {
+        fs.readFile(fileData.filePaths[0], 'utf8', (error, data) => {
+          const userDataPath = app.getPath("userData")
+          const fileName = path.basename(fileData.filePaths[0])
+
+          fs.copyFile(fileData.filePaths[0], userDataPath+'/'+fileName, (err) => {
+            if (err) throw err;
+            console.log('File copied!');
+          });
+      
+          // Send result back to renderer process
+          //win.webContents.send("fromMain", responseObj);
+        });
+      }
+    })
+  }
+
+  /*try {
+    const chosenFolders = await dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] });
+    if (chosenFolders && chosenFolders.canceled === false) {
+     const date = format(new Date(), 'MM-DD-YYYY HH[:]mm');
+     let config = JSON.stringify(ElectronStore.store);
+     let configPath = path.join(chosenFolders.filePaths[0], `jsui-config (${date}).json`);
+     fs.writeFileSync(configPath, config);
+    }
+   } catch (err) {
+    logger.log(err);
+   }*/
+  
+  /*fs.readFile("path/to/file", (error, data) => {
+    // Do something with file contents
+
+    // Send result back to renderer process
+    win.webContents.send("fromMain", responseObj);
+  });*/
 });

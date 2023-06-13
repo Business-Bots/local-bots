@@ -1,6 +1,6 @@
 {
-  "name": "opensource",
-  "productName": "opensource",
+  "name": "local-bots",
+  "productName": "Local Bots",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",
